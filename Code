@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Better Prompt Generator</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .questions-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .question {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>Better Prompt Generator</h1>
+        <textarea id="userPrompt" placeholder="Enter your prompt here..."></textarea>
+        <button id="generateButton">Generate Follow-Up Questions</button>
+        <div id="followUpQuestions" class="questions-container"></div>
+    </div>
+    <script>
+        // JavaScript Functionality
+        document.getElementById('generateButton').addEventListener('click', function() {
+            const userPrompt = document.getElementById('userPrompt').value;
+            const followUpQuestionsContainer = document.getElementById('followUpQuestions');
+            
+            // Clear previous questions
+            followUpQuestionsContainer.innerHTML = '';
+
+            if (userPrompt.trim() === '') {
+                followUpQuestionsContainer.innerHTML = '<p>Please enter a prompt to generate follow-up questions.</p>';
+                return;
+            }
+
+            const followUpQuestions = [
+                "What specific outcome are you hoping to achieve?",
+                "Can you provide more context or details?",
+                "What format do you want the response in?",
+                "Are there any constraints or limitations I should consider?",
+                "Who is the intended audience for this prompt?"
+            ];
+
+            // Typing animation
+            let index = 0;
+            function typeQuestion() {
+                if (index < followUpQuestions.length) {
+                    const questionElement = document.createElement('div');
+                    questionElement.className = 'question';
+                    followUpQuestionsContainer.appendChild(questionElement);
+                    let questionText = followUpQuestions[index];
+                    let charIndex = 0;
+
+                    function typeChar() {
+                        if (charIndex < questionText.length) {
+                            questionElement.innerHTML += questionText.charAt(charIndex);
+                            charIndex++;
+                            setTimeout(typeChar, 50); // Adjust typing speed here
+                        } else {
+                            index++;
+                            setTimeout(typeQuestion, 500); // Delay before typing the next question
+                        }
+                    }
+                    typeChar();
+                }
+            }
+            typeQuestion();
+        });
+    </script>
+</body>
+</html>
