@@ -1,0 +1,59 @@
+class DynamicPromptGenerator:
+    def __init__(self, initial_prompt):
+        self.initial_prompt = initial_prompt
+        self.enhanced_prompt = {
+            'Goal/Objective': '',
+            'Content/Format Preference': '',
+            'Specific Details': '',
+            'Preferred Tone/Style': '',
+            'Constraints/Limitations': '',
+            'Urgency/Time-Sensitivity': '',
+            'Additional Considerations': ''
+        }
+
+    def follow_up_questions(self):
+        # Ask questions to enhance the prompt
+        self.enhanced_prompt['Goal/Objective'] = input("What is your overall goal or objective for this prompt?\n(Describe what you want to achieve or the outcome you are looking for): ")
+        
+        self.enhanced_prompt['Content/Format Preference'] = input("What type of content or format would you like to receive?\n(E.g., detailed explanation, list, summary, comparison, storytelling, step-by-step guide, etc.): ")
+        
+        self.enhanced_prompt['Specific Details'] = input("Are there any specific details, examples, or criteria you would like to include?\n(Provide relevant information such as numbers, timeframes, specific names, references, or any context that should be considered): ")
+        
+        self.enhanced_prompt['Preferred Tone/Style'] = input("What tone or style do you prefer for the response?\n(E.g., formal, friendly, technical, humorous, motivational, etc.): ")
+        
+        self.enhanced_prompt['Constraints/Limitations'] = input("Are there any constraints or limitations I should be aware of?\n(E.g., word count, format restrictions, sensitivity to certain topics, etc.): ")
+        
+        self.enhanced_prompt['Urgency/Time-Sensitivity'] = input("How urgent or time-sensitive is your request?\n(If there is a deadline, please mention it, or describe how quickly you need the information): ")
+        
+        self.enhanced_prompt['Additional Considerations'] = input("Is there anything else I should consider to make the response more personalized and useful for you?\n(Any additional information or preferences not covered above): ")
+
+    def generate_summary(self):
+        # Generate a summary of the enhanced prompt based on the user's input
+        summary = """
+        ### Enhanced Prompt Summary ###
+
+        **Goal/Objective:** {Goal/Objective}
+
+        **Content/Format Preference:** {Content/Format Preference}
+
+        **Specific Details:** {Specific Details}
+
+        **Preferred Tone/Style:** {Preferred Tone/Style}
+
+        **Constraints/Limitations:** {Constraints/Limitations}
+
+        **Urgency/Time-Sensitivity:** {Urgency/Time-Sensitivity}
+
+        **Additional Considerations:** {Additional Considerations}
+        """.format(**self.enhanced_prompt)
+        return summary
+
+
+# Example usage:
+if __name__ == "__main__":
+    initial_prompt = input("Enter your initial prompt: ")
+    prompt_generator = DynamicPromptGenerator(initial_prompt)
+    prompt_generator.follow_up_questions()
+    final_summary = prompt_generator.generate_summary()
+    print("\nYour finalized prompt is:\n")
+    print(final_summary)
